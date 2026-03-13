@@ -3,7 +3,7 @@
 Simple Todo CLI written in Go.
 
 ## Project URL
-https://github.com/Mosuzzzz/todo-list_GolangBasic
+https://roadmap.sh/projects/task-tracker
 
 ## Features
 
