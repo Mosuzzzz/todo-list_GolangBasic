@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"os"
 	"strconv"
+	"runtime"
+	"os/exec"
 	"strings"
 	"time"
 )
@@ -92,6 +94,8 @@ func main() {
 			DeleteTask(tasks, idInt)
 		case "help":
 			ShowHelp()
+		case "clear":
+			clearScreen()
 		case "exit":
 			os.Exit(0)
 		default:
@@ -247,9 +251,27 @@ func ShowHelp() {
 	fmt.Println(" delete <id>              - Delete task (soft delete)")
 	fmt.Println(" list                     - Show all tasks")
 	fmt.Println(" help                     - Show this help message")
+	fmt.Println(" clear                    - Clear screen terminal")
+	fmt.Println(" exit                     - Exit this program")
 	fmt.Println("")
 	fmt.Println(`Example:`)
 	fmt.Println(` add "Buy milk"`)
 	fmt.Println(` update 1 "Buy coffee"`)
 	fmt.Println(` status 1 done`)
+}
+
+func clearScreen() {
+	switch runtime.GOOS {
+	case "linux", "darwin":
+		cmd := exec.Command("clear")
+		cmd.Stdout = os.Stdout
+		cmd.Run()
+	case "windows":
+		cmd := exec.Command("cmd", "/c", "cls")
+		cmd.Stdout = os.Stdout
+		cmd.Run()
+	default:
+		fmt.Print("\033[2J")
+		fmt.Print("\033[H")
+	}
 }
